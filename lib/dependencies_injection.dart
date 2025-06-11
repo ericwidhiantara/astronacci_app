@@ -58,7 +58,7 @@ void _dataSources() {
 
 void _useCase() {
   /// Auth
-  sl.registerLazySingleton(() => PostLogin(sl()));
+  sl.registerLazySingleton(() => PostLoginUsecase(sl()));
   sl.registerLazySingleton(() => PostRegister(sl()));
 
   // General

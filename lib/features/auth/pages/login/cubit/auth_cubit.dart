@@ -8,9 +8,9 @@ part 'auth_cubit.freezed.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this._postLogin) : super(const AuthStateLoading());
+  AuthCubit(this._usecase) : super(const AuthStateLoading());
 
-  final PostLogin _postLogin;
+  final PostLoginUsecase _usecase;
 
   bool? isPasswordHide = true;
 
@@ -22,7 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login(LoginParams params) async {
     emit(const AuthStateLoading());
-    final data = await _postLogin.call(params);
+    final data = await _usecase.call(params);
 
     data.fold(
       (l) {
@@ -30,7 +30,7 @@ class AuthCubit extends Cubit<AuthState> {
           emit(AuthStateFailure(l.message ?? ""));
         }
       },
-      (r) => emit(AuthStateSuccess(r.token)),
+      (r) => emit(AuthStateSuccess(r)),
     );
   }
 

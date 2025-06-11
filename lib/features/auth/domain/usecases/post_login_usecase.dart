@@ -3,16 +3,16 @@ import 'package:boilerplate/features/features.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'post_login.freezed.dart';
-part 'post_login.g.dart';
+part 'post_login_usecase.freezed.dart';
+part 'post_login_usecase.g.dart';
 
-class PostLogin extends UseCase<Login, LoginParams> {
+class PostLoginUsecase extends UseCase<LoginEntity, LoginParams> {
   final AuthRepository _repo;
 
-  PostLogin(this._repo);
+  PostLoginUsecase(this._repo);
 
   @override
-  Future<Either<Failure, Login>> call(LoginParams params) =>
+  Future<Either<Failure, LoginEntity>> call(LoginParams params) =>
       _repo.login(params);
 }
 

@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
           AuthStateLoading() => context.show(),
           AuthStateSuccess(:final data) => (() {
               context.dismiss();
-              data.toString().toToastSuccess(context);
+              data?.meta?.message.toString().toToastSuccess(context);
 
               TextInput.finishAutofillContext();
               context.goNamed(Routes.root.name);

@@ -5,36 +5,36 @@ import 'package:dartz/dartz.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   /// Data Source
-  final AuthRemoteDatasource authRemoteDatasource;
+  final AuthRemoteDatasource _dataSource;
   final MainBoxMixin mainBoxMixin;
 
-  const AuthRepositoryImpl(this.authRemoteDatasource, this.mainBoxMixin);
+  const AuthRepositoryImpl(this._dataSource, this.mainBoxMixin);
 
   @override
-  Future<Either<Failure, Login>> login(LoginParams loginParams) async {
-    final response = await authRemoteDatasource.login(loginParams);
+  Future<Either<Failure, LoginEntity>> login(LoginParams params) async {
+    final response = await _dataSource.login(params);
 
     return response.fold(
       (failure) => Left(failure),
-      (loginResponse) {
+      (response) {
         mainBoxMixin.addData(MainBoxKeys.isLogin, true);
-        mainBoxMixin.addData(MainBoxKeys.token, loginResponse.token);
+        mainBoxMixin.addData(MainBoxKeys.token, response.data?.token);
 
-        return Right(loginResponse.toEntity());
+        return Right(response.toEntity());
       },
     );
   }
 
   @override
   Future<Either<Failure, Register>> register(
-    RegisterParams registerParams,
+    RegisterParams registerparams,
   ) async {
-    final response = await authRemoteDatasource.register(registerParams);
+    final response = await _dataSource.register(registerparams);
 
     return response.fold(
       (failure) => Left(failure),
-      (registerResponse) {
-        return Right(registerResponse.toEntity());
+      (response) {
+        return Right(response.toEntity());
       },
     );
   }
