@@ -36,6 +36,7 @@ class TextF extends StatefulWidget {
     this.onFieldSubmitted,
     this.required = true,
     this.textCapitalization = TextCapitalization.sentences,
+    this.borderRadius,
   });
 
   final FocusNode? curFocusNode;
@@ -69,6 +70,7 @@ class TextF extends StatefulWidget {
   final VoidCallback? onFieldSubmitted;
   final bool? required;
   final TextCapitalization? textCapitalization;
+  final double? borderRadius;
 
   @override
   _TextFState createState() => _TextFState();
@@ -92,11 +94,9 @@ class _TextFState extends State<TextF> {
               children: [
                 Text(
                   widget.hint ?? "",
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: widget.hintColor ??
-                            Theme.of(context)
-                                .extension<CustomColor>()!
-                                .defaultText,
+                            Theme.of(context).extension<CustomColor>()!.text,
                         fontSize: widget.fontSize ?? Dimens.text14,
                         fontWeight: FontWeight.w400,
                       ),
@@ -119,7 +119,7 @@ class _TextFState extends State<TextF> {
               widget.subtitle ?? "",
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                     color: widget.hintColor ??
-                        Theme.of(context).extension<CustomColor>()!.defaultText,
+                        Theme.of(context).extension<CustomColor>()!.text,
                     fontSize: widget.fontSize ?? Dimens.text12,
                     fontWeight: FontWeight.w400,
                   ),
@@ -174,40 +174,53 @@ class _TextFState extends State<TextF> {
                   ),
                   enabledBorder: OutlineInputBorder(
                     gapPadding: 0,
-                    borderRadius: BorderRadius.circular(Dimens.space4),
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? Dimens.size4,
+                    ),
                     borderSide: BorderSide(
                       color:
-                          Theme.of(context).extension<CustomColor>()!.subtitle!,
+                          Theme.of(context).extension<CustomColor>()!.grey200!,
                     ),
                   ),
                   disabledBorder: OutlineInputBorder(
                     gapPadding: 0,
-                    borderRadius: BorderRadius.circular(Dimens.space4),
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? Dimens.size4,
+                    ),
                     borderSide: BorderSide(
                       color:
-                          Theme.of(context).extension<CustomColor>()!.subtitle!,
+                          Theme.of(context).extension<CustomColor>()!.grey200!,
                     ),
                   ),
                   errorStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Theme.of(context).extension<CustomColor>()!.red,
+                        color:
+                            Theme.of(context).extension<CustomColor>()!.red700,
                       ),
                   focusedErrorBorder: OutlineInputBorder(
                     gapPadding: 0,
-                    borderRadius: BorderRadius.circular(Dimens.space4),
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? Dimens.size4,
+                    ),
                     borderSide: BorderSide(
-                      color: Theme.of(context).extension<CustomColor>()!.red!,
+                      color:
+                          Theme.of(context).extension<CustomColor>()!.red700!,
                     ),
                   ),
                   errorBorder: OutlineInputBorder(
                     gapPadding: 0,
-                    borderRadius: BorderRadius.circular(Dimens.space4),
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? Dimens.size4,
+                    ),
                     borderSide: BorderSide(
-                      color: Theme.of(context).extension<CustomColor>()!.red!,
+                      color:
+                          Theme.of(context).extension<CustomColor>()!.red700!,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     gapPadding: 0,
-                    borderRadius: BorderRadius.circular(Dimens.space4),
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? Dimens.size4,
+                    ),
                     borderSide: BorderSide(
                       color:
                           Theme.of(context).extension<CustomColor>()!.primary!,

@@ -28,7 +28,7 @@ class ButtonText extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          foregroundColor: Theme.of(context).extension<CustomColor>()!.pink,
+          foregroundColor: Theme.of(context).extension<CustomColor>()!.primary,
         ),
         child: Text(
           title.toUpperCase(),

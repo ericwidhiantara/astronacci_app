@@ -29,8 +29,7 @@ class _SplashPageState extends State<SplashPage> with MainBoxMixin {
 
             // Proceed with normal flow
             final isLogin = getData<bool>(MainBoxKeys.isLogin) ?? false;
-            final String route =
-                isLogin ? Routes.register.name : Routes.login.name;
+            final String route = isLogin ? Routes.root.name : Routes.login.name;
             if (context.mounted) context.goNamed(route);
           })(),
         AppVersionStateFailure() => (() {

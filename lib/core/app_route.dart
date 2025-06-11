@@ -28,6 +28,9 @@ enum Routes {
   cameraPreview("/camera/preview"),
   photoPreview("/photo/preview"),
   imageEditor("/image/editor"),
+
+  // User
+  users("/users"),
   ;
 
   const Routes(this.path);
@@ -93,7 +96,7 @@ class AppRoute {
       GoRoute(
         path: Routes.root.path,
         name: Routes.root.name,
-        redirect: (_, __) => Routes.home.path,
+        redirect: (_, __) => Routes.users.path,
       ),
       GoRoute(
         path: Routes.login.path,
@@ -104,7 +107,20 @@ class AppRoute {
         path: Routes.register.path,
         name: Routes.register.name,
         builder: (_, __) => BlocProvider(
-            create: (_) => sl<RegisterCubit>(), child: const RegisterPage()),
+          create: (_) => sl<RegisterCubit>(),
+          child: const RegisterPage(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.users.path,
+        name: Routes.users.name,
+        builder: (_, __) => BlocProvider(
+          create: (_) => sl<UserListCubit>()
+            ..fetchUserList(
+              const GetUserListParams(),
+            ),
+          child: const UserListPage(),
+        ),
       ),
       GoRoute(
         path: Routes.settings.path,

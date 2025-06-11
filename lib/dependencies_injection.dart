@@ -43,6 +43,9 @@ void _repositories() {
   sl.registerLazySingleton<GeneralRepository>(
     () => GeneralRepositoryImpl(sl()),
   );
+  sl.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(sl()),
+  );
 }
 
 /// Register dataSources
@@ -54,6 +57,10 @@ void _dataSources() {
   sl.registerLazySingleton<GeneralRemoteDatasource>(
     () => GeneralRemoteDatasourceImpl(sl()),
   );
+
+  sl.registerLazySingleton<UserRemoteDatasource>(
+    () => UserRemoteDatasourceImpl(sl()),
+  );
 }
 
 void _useCase() {
@@ -63,6 +70,9 @@ void _useCase() {
 
   // General
   sl.registerLazySingleton(() => CheckAppVersionUsecase(sl()));
+
+  // User
+  sl.registerLazySingleton(() => GetUserListUsecase(sl()));
 }
 
 void _cubit() {
@@ -74,4 +84,7 @@ void _cubit() {
   sl.registerFactory(() => MainCubit());
   sl.registerFactory(() => AppVersionCubit(sl()));
   sl.registerFactory(() => SettingsCubit());
+
+  // User
+  sl.registerFactory(() => UserListCubit(sl()));
 }

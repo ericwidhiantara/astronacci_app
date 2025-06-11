@@ -19,7 +19,7 @@ class ButtonNotification extends StatelessWidget {
               child: Icon(
                 Icons.notifications_outlined,
                 size: Dimens.space30,
-                color: Theme.of(context).extension<CustomColor>()!.pink,
+                color: Theme.of(context).extension<CustomColor>()!.primary,
               ),
             ),
             Positioned(
@@ -28,7 +28,7 @@ class ButtonNotification extends StatelessWidget {
               child: Visibility(
                 child: CircleAvatar(
                   backgroundColor:
-                      Theme.of(context).extension<CustomColor>()!.flamingo,
+                      Theme.of(context).extension<CustomColor>()!.primary500,
                   maxRadius: Dimens.space8,
                   child: Center(
                     child: Text(

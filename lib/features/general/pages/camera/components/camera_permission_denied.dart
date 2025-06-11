@@ -39,13 +39,13 @@ class CameraPermissionDeniedWidget extends StatelessWidget {
             children: [
               Button(
                 width: MediaQuery.of(context).size.width * 0.4,
-                color: Theme.of(context).extension<CustomColor>()!.defaultText,
+                color: Theme.of(context).extension<CustomColor>()!.text,
                 onPressed: onCancel,
                 title: Strings.of(context)!.cancel,
               ),
               Button(
                 width: MediaQuery.of(context).size.width * 0.4,
-                color: Theme.of(context).extension<CustomColor>()!.blue,
+                color: Theme.of(context).extension<CustomColor>()!.primary,
                 onPressed: onRetryPermission,
                 title: Strings.of(context)!.givePermission,
               ),

@@ -19,7 +19,7 @@ extension StringExtension on String {
 
       showToastWidget(
         Toast(
-          bgColor: Theme.of(context).extension<CustomColor>()!.red,
+          bgColor: Theme.of(context).extension<CustomColor>()!.red700,
           icon: Icons.error,
           message: message,
           textColor: Colors.white,
@@ -44,7 +44,7 @@ extension StringExtension on String {
       // showToast(msg)
       showToastWidget(
         Toast(
-          bgColor: Theme.of(context).extension<CustomColor>()!.green,
+          bgColor: Theme.of(context).extension<CustomColor>()!.green700,
           icon: Icons.check_circle,
           message: message,
           textColor: Colors.white,
@@ -67,7 +67,7 @@ extension StringExtension on String {
 
       showToastWidget(
         Toast(
-          bgColor: Theme.of(context).extension<CustomColor>()!.pink,
+          bgColor: Theme.of(context).extension<CustomColor>()!.primary,
           icon: Icons.info,
           message: message,
           textColor: Colors.white,

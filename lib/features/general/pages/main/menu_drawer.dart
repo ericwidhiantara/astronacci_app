@@ -61,7 +61,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                               Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: Theme.of(context)
                                         .extension<CustomColor>()!
-                                        .shadow,
+                                        .grey200,
                                   ),
                         ),
                       ],

@@ -85,21 +85,21 @@ class _DropDownState<T> extends State<DropDown<T>> {
                   gapPadding: 0,
                   borderRadius: BorderRadius.circular(Dimens.space4),
                   borderSide: BorderSide(
-                    color: Theme.of(context).extension<CustomColor>()!.red!,
+                    color: Theme.of(context).extension<CustomColor>()!.red700!,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(
                   gapPadding: 0,
                   borderRadius: BorderRadius.circular(Dimens.space4),
                   borderSide: BorderSide(
-                    color: Theme.of(context).extension<CustomColor>()!.red!,
+                    color: Theme.of(context).extension<CustomColor>()!.red700!,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   gapPadding: 0,
                   borderRadius: BorderRadius.circular(Dimens.space4),
                   borderSide: BorderSide(
-                    color: Theme.of(context).extension<CustomColor>()!.pink!,
+                    color: Theme.of(context).extension<CustomColor>()!.primary!,
                   ),
                 ),
               ),

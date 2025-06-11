@@ -67,7 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      appBar: const CustomAppBar().call(),
+      appBar: const CustomAppBar(
+        title: 'Register',
+      ),
       child: BlocListener<RegisterCubit, RegisterState>(
         listener: (_, state) => switch (state) {
           RegisterStateLoading() => context.show(),

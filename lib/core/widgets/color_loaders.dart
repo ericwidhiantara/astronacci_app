@@ -107,7 +107,7 @@ class _ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Palette.primaryLight,
+                    color: Palette.primary500,
                   ),
                 ),
                 Transform.translate(
@@ -117,7 +117,7 @@ class _ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Theme.of(context).extension<CustomColor>()!.red,
+                    color: Theme.of(context).extension<CustomColor>()!.red700,
                   ),
                 ),
                 Transform.translate(
@@ -127,7 +127,9 @@ class _ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Theme.of(context).extension<CustomColor>()!.yellow,
+                    color: Theme.of(context)
+                        .extension<CustomColor>()!
+                        .secondary400,
                   ),
                 ),
                 Transform.translate(
@@ -137,7 +139,7 @@ class _ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Theme.of(context).extension<CustomColor>()!.green,
+                    color: Theme.of(context).extension<CustomColor>()!.red500,
                   ),
                 ),
                 Transform.translate(
@@ -147,7 +149,8 @@ class _ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Theme.of(context).extension<CustomColor>()!.flamingo,
+                    color:
+                        Theme.of(context).extension<CustomColor>()!.primary500,
                   ),
                 ),
                 Transform.translate(
@@ -157,7 +160,8 @@ class _ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Theme.of(context).extension<CustomColor>()!.lavender,
+                    color:
+                        Theme.of(context).extension<CustomColor>()!.primary100,
                   ),
                 ),
                 Transform.translate(
@@ -167,7 +171,7 @@ class _ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Theme.of(context).extension<CustomColor>()!.pink,
+                    color: Theme.of(context).extension<CustomColor>()!.primary,
                   ),
                 ),
               ],
