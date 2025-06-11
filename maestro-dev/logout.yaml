@@ -1,0 +1,5 @@
+appId: com.example.tddboilerplate.dev
+---
+- tapOn: "Menu"
+- tapOn: "Logout"
+- tapOn: "Yes"

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "758311861545",
+    "project_id": "tddboilerplatedev",
+    "storage_bucket": "tddboilerplatedev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758311861545:android:0f260050185514b3d10b38",
+        "android_client_info": {
+          "package_name": "com.richh.boilerplate.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCURdScwCVWnDjbvqMbftVfKr41apG_Mi4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

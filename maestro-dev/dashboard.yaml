@@ -1,0 +1,25 @@
+appId: com.example.tddboilerplate.dev
+---
+- swipe:
+    direction: "UP"
+- swipe:
+    direction: "UP"
+- tapOn:
+    point: "90%,26%"
+- swipe:
+    direction: "UP"
+- tapOn:
+    point: "90%,70%"
+- swipe:
+    direction: "DOWN"
+- swipe:
+    direction: "DOWN"
+- tapOn:
+    point: "50%,13%"
+- tapOn:
+    point: "82%,13%"
+- tapOn:
+    point: "94%,13%"
+- tapOn: "Yes"
+- tapOn: "Menu"
+- tapOn: "Dashboard"

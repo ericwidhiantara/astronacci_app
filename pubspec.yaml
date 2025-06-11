@@ -1,0 +1,146 @@
+name: boilerplate
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.2 <4.0.0'
+
+dependency_overrides:
+  analyzer: ^6.7.0
+
+objectbox:
+  # Writes objectbox-model.json and objectbox.g.dart to lib/utils/services/database (and test/custom).
+  output_dir: utils/services/database/
+  # Or optionally specify the lib and test output folder separately.
+  # output_dir:
+  #   lib: custom
+  #   test: other
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.1.0
+  flutter_native_splash: ^2.4.6
+  intl: ^0.19.0
+  jwt_decoder: ^2.0.1
+
+  flutter_slidable: ^4.0.0
+  flutter_map: ^8.1.1
+  flutter_map_cancellable_tile_provider: ^3.1.0
+  latlong2: ^0.9.1
+  geolocator: ^14.0.0
+  geocoding: ^3.0.0
+  permission_handler: ^12.0.0+1  #don't update, conflict with image_editor_plus
+  photo_view: ^0.15.0
+  mime: ^2.0.0
+  camera: ^0.11.1
+  image_picker: ^1.1.2
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  http_parser: ^4.1.2
+  file_picker: ^10.1.7
+  flutter_pdfview: ^1.4.0+1
+  webview_flutter: ^4.11.0
+  url_launcher: ^6.3.1
+  image_editor: ^1.6.0
+  extended_image: ^10.0.1
+  sentry_flutter: ^8.14.2
+  lottie: ^3.3.1
+  sentry_dio: ^8.14.2
+  package_info_plus: ^8.3.0
+  onesignal_flutter: ^5.3.2
+  screenshot: ^3.0.0
+
+  # Functional programming thingies
+  dartz: ^0.10.1
+
+  # Use as Network Client
+  dio: ^5.8.0+1
+
+  # Use objectbox to save local data
+  objectbox: ^4.2.0
+  objectbox_flutter_libs: any
+
+  # Use for Dependencies Injection
+  get_it: ^8.0.3
+
+  # Use for State Management with BLoC pattern
+  flutter_bloc: ^9.1.1
+
+  # Use for custom toast with Status, ex : Loading,Success,Failed
+  oktoast: ^3.4.0
+
+  # Use for responsive UI, set default size base on Mock Up
+  flutter_screenutil: ^5.9.3
+
+  cached_network_image: ^3.4.1
+
+  # logger
+  logger: ^2.5.0
+
+  # Firebase
+  firebase_core: ^3.13.0
+  firebase_analytics: ^11.4.5
+  firebase_crashlytics: ^4.3.5
+
+  # router
+  go_router: ^15.1.2
+
+  # Freezed
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.9.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_launcher_icons: ^0.14.3
+  lint: ^2.8.0
+  flutter_lints: ^5.0.0
+  bloc_test: ^10.0.0
+  build_runner: ^2.4.12
+  http_mock_adapter: ^0.6.1
+  #  mockito: ^5.4.6
+
+  # Freezed
+  freezed: ^3.0.6 # conflict when update
+  json_serializable: ^6.9.5
+
+  # objectbox generator
+  objectbox_generator: any
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/fonts/
+    - assets/images/
+    - assets/svg/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Poppins-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins-Black.ttf
+          weight: 900
