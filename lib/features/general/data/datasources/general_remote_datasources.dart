@@ -1,5 +1,6 @@
 import 'package:boilerplate/core/core.dart';
 import 'package:boilerplate/features/features.dart';
+import 'package:boilerplate/utils/utils.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class GeneralRemoteDatasource {
@@ -20,8 +21,11 @@ class GeneralRemoteDatasourceImpl implements GeneralRemoteDatasource {
           return AppVersionResponse.fromJson(response);
         }
         return AppVersionResponse(
-          status: 500,
-          message: "Terjadi kesalahan pada server, $response",
+          meta: MetaResponse(
+            code: 500,
+            status: "error",
+            message: "Terjadi kesalahan pada server, $response",
+          ),
         );
       },
     );

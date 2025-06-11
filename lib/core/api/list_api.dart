@@ -5,5 +5,5 @@ class ListAPI {
 
   static const String login = "/api/login";
   static const String users = "/api/users";
-  static const String checkAppVersion = "/api/checkAppVersion";
+  static const String checkAppVersion = "/check-app-version";
 }

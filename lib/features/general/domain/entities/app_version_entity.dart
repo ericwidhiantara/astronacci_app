@@ -1,3 +1,4 @@
+import 'package:boilerplate/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_version_entity.freezed.dart';
@@ -5,9 +6,8 @@ part 'app_version_entity.freezed.dart';
 @freezed
 abstract class AppVersionEntity with _$AppVersionEntity {
   const factory AppVersionEntity({
-    String? message,
+    MetaEntity? meta,
     VersionDataEntity? data,
-    int? status,
   }) = _AppVersionEntity;
 
   const AppVersionEntity._();

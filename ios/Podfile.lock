@@ -179,7 +179,7 @@ PODS:
   - objectbox_flutter_libs (0.0.1):
     - Flutter
     - ObjectBox (= 4.2.0)
-  - onesignal_flutter (5.3.0):
+  - onesignal_flutter (5.3.2):
     - Flutter
     - OneSignalXCFramework (= 5.2.10)
   - OneSignalXCFramework (5.2.10):
@@ -378,7 +378,7 @@ SPEC CHECKSUMS:
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   ObjectBox: 2b4c925852ea99f070492f21328bf4002165cbd9
   objectbox_flutter_libs: b82545b6e8b0dd3e989038e9c3fba553230df8a5
-  onesignal_flutter: c4442bab25faaf3a3ab77cdcd33f4507f10b05b8
+  onesignal_flutter: 54f47cbad4163ad00abd672846080ecf4055c524
   OneSignalXCFramework: 1a3b28dfbff23aabce585796d23c1bef37772774
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
@@ -393,6 +393,6 @@ SPEC CHECKSUMS:
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
   webview_flutter_wkwebview: a4af96a051138e28e29f60101d094683b9f82188
 
-PODFILE CHECKSUM: e30f02f9d1c72c47bb6344a0a748c9d268180865
+PODFILE CHECKSUM: 2f8fc4600e77288d6e482d403f286cce6d3add5f
 
 COCOAPODS: 1.16.2
