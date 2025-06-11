@@ -3,24 +3,28 @@ import 'package:boilerplate/features/features.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'post_register.freezed.dart';
-part 'post_register.g.dart';
+part 'post_register_usecase.freezed.dart';
+part 'post_register_usecase.g.dart';
 
-class PostRegister extends UseCase<Register, RegisterParams> {
+class PostRegisterUsecase extends UseCase<RegisterEntity, RegisterParams> {
   final AuthRepository _repo;
 
-  PostRegister(this._repo);
+  PostRegisterUsecase(this._repo);
 
   @override
-  Future<Either<Failure, Register>> call(RegisterParams params) =>
+  Future<Either<Failure, RegisterEntity>> call(RegisterParams params) =>
       _repo.register(params);
 }
 
 @freezed
 abstract class RegisterParams with _$RegisterParams {
   const factory RegisterParams({
+    @Default("") String name,
     @Default("") String email,
     @Default("") String password,
+    @JsonKey(name: "password_confirmation")
+    @Default("")
+    String passwordConfirmation,
   }) = _RegisterParams;
 
   factory RegisterParams.fromJson(Map<String, dynamic> json) =>

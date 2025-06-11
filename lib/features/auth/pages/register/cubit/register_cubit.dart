@@ -7,13 +7,13 @@ part 'register_cubit.freezed.dart';
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  final PostRegister _postRegister;
+  final PostRegisterUsecase _usecase;
 
   /// Handle state visibility password
   bool? isPasswordHide = true;
   bool? isPasswordRepeatHide = true;
 
-  RegisterCubit(this._postRegister) : super(const RegisterStateLoading());
+  RegisterCubit(this._usecase) : super(const RegisterStateLoading());
 
   void showHidePassword() {
     emit(const RegisterStateInit());
@@ -29,14 +29,33 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future<void> register(RegisterParams params) async {
     emit(const RegisterStateLoading());
-    final data = await _postRegister.call(params);
+    final data = await _usecase.call(params);
     data.fold(
       (l) {
         if (l is ServerFailure) {
-          emit(RegisterStateFailure(l.message ?? ""));
+          final Map<String, dynamic>? errorJson =
+              l.error as Map<String, dynamic>?;
+          final RegisterErrorEntity? parsedErrors =
+              _parseValidationErrors(errorJson);
+
+          emit(RegisterStateFailure(
+              l, parsedErrors, l.message ?? "Register failed"));
         }
       },
-      (r) => emit(RegisterStateSuccess(r.token)),
+      (r) => emit(RegisterStateSuccess(r)),
     );
+  }
+}
+
+RegisterErrorEntity? _parseValidationErrors(Map<String, dynamic>? error) {
+  try {
+    final fieldErrors = Map<String, List<String>>.from(
+      (error?['data']?['error'] as Map<String, dynamic>).map(
+        (key, value) => MapEntry(key, List<String>.from(value as List)),
+      ),
+    );
+    return RegisterErrorEntity(fields: fieldErrors);
+  } catch (_) {
+    return null;
   }
 }

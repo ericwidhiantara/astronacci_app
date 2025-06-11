@@ -14,6 +14,7 @@ enum Routes {
   appVersion("/app-version"),
   // Auth Page
   login("/auth/login"),
+  register("/auth/register"),
 
   // Navbar
   home("/homes"),
@@ -98,6 +99,12 @@ class AppRoute {
         path: Routes.login.path,
         name: Routes.login.name,
         builder: (_, __) => const LoginPage(),
+      ),
+      GoRoute(
+        path: Routes.register.path,
+        name: Routes.register.name,
+        builder: (_, __) => BlocProvider(
+            create: (_) => sl<RegisterCubit>(), child: const RegisterPage()),
       ),
       GoRoute(
         path: Routes.settings.path,

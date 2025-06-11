@@ -26,6 +26,15 @@ class _LoginPageState extends State<LoginPage> {
   final _keyForm = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    super.dispose();
+    _conEmail.dispose();
+    _conPassword.dispose();
+    _fnEmail.dispose();
+    _fnPassword.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Parent(
       child: BlocListener<AuthCubit, AuthState>(

@@ -26,10 +26,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, Register>> register(
-    RegisterParams registerparams,
+  Future<Either<Failure, RegisterEntity>> register(
+    RegisterParams params,
   ) async {
-    final response = await _dataSource.register(registerparams);
+    final response = await _dataSource.register(params);
 
     return response.fold(
       (failure) => Left(failure),

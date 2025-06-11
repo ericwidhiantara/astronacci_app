@@ -5,15 +5,24 @@ abstract class Failure {
 
 class ServerFailure extends Failure {
   final String? message;
+  final dynamic error;
+  final int? statusCode;
 
-  const ServerFailure(this.message);
+  const ServerFailure(
+    this.message, {
+    this.error,
+    this.statusCode,
+  });
 
   @override
   bool operator ==(Object other) =>
-      other is ServerFailure && other.message == message;
+      other is ServerFailure &&
+      other.message == message &&
+      other.error == error &&
+      other.statusCode == statusCode;
 
   @override
-  int get hashCode => message.hashCode;
+  int get hashCode => Object.hash(message, error, statusCode);
 }
 
 class NoDataFailure extends Failure {

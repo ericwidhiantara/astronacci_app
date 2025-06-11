@@ -5,5 +5,5 @@ import 'package:dartz/dartz.dart';
 abstract class AuthRepository {
   Future<Either<Failure, LoginEntity>> login(LoginParams params);
 
-  Future<Either<Failure, Register>> register(RegisterParams params);
+  Future<Either<Failure, RegisterEntity>> register(RegisterParams params);
 }

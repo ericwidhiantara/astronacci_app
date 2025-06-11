@@ -32,23 +32,14 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
     final dio = _createDio();
     dio.interceptors.add(DioInterceptor());
     dio.addSentry(captureFailedRequests: true);
-
     return dio;
   }
 
   String? _loadToken() {
     try {
       final token = getData<String>(MainBoxKeys.token);
-      if (token == null) {
-        developer.log(
-            "Token not found in ObjectBox for key: ${MainBoxKeys.token.name}",
-            name: 'DioClient');
-        return null;
-      }
-      if (token.isEmpty) {
-        developer.log(
-            "Token is empty in ObjectBox for key: ${MainBoxKeys.token.name}",
-            name: 'DioClient');
+      if (token == null || token.isEmpty) {
+        developer.log("Token invalid or not found", name: 'DioClient');
         return null;
       }
       developer.log("Token loaded successfully: $token", name: 'DioClient');
@@ -82,26 +73,20 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
   }) async {
     try {
       final response = await request();
-
-      // Check for non-200 status codes
       if (response.statusCode != 200) {
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
         );
       }
-
-      // Parse the response
       return isIsolate
           ? await _processResponseInIsolate(response, converter)
           : Right(converter(response.data));
     } on DioException catch (e, stackTrace) {
-      // Handle Dio-specific exceptions
       return await _handleError(e, stackTrace);
     } catch (e, stackTrace) {
-      // Catch any other exceptions and log them
       await _logError(e, stackTrace);
-      return Left(ServerFailure("Unexpected error: $e"));
+      return Left(ServerFailure("Unexpected error: $e", error: e));
     }
   }
 
@@ -111,17 +96,12 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
   ) async {
     if (response.data is! Map<String, dynamic>) {
       await _logError(response);
-      final responseData = response.data; // Cache for better readability
-
-      // Handle cases where response.data is not a Map
+      final responseData = response.data;
       final message = responseData is Map<String, dynamic>
           ? responseData["message"]?.toString()
           : "Response is not a map, please check the server: $responseData";
-
       return Left(ServerFailure(message));
     }
-
-    // If response.data is a Map, proceed
     final isolateParse = IsolateParser<T>(
       response.data as Map<String, dynamic>,
       converter,
@@ -134,10 +114,7 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
     DioException e,
     StackTrace stackTrace,
   ) async {
-    // Log the error and stack trace
     await _logError(e, stackTrace);
-
-    // Handle specific DioException types
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
         return const Left(
@@ -156,13 +133,14 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
       case DioExceptionType.cancel:
         return const Left(ServerFailure("Permintaan telah dibatalkan."));
       case DioExceptionType.badResponse:
-        // Handle bad response from server
         final statusCode = e.response?.statusCode;
         final errorMessage = e.response?.data?["message"]?.toString() ??
             "Terjadi kesalahan. Kode: $statusCode - ${e.response?.statusMessage}";
-
-        return Left(ServerFailure(errorMessage));
-
+        return Left(ServerFailure(
+          errorMessage,
+          error: e.error,
+          statusCode: statusCode,
+        ));
       case DioExceptionType.unknown:
       default:
         final errorMessage = e.message ??
@@ -178,8 +156,7 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
         if (statusCode == 429) {
           return const Left(
             ServerFailure(
-              "Terlalu banyak permintaan, silakan coba lagi nanti.",
-            ),
+                "Terlalu banyak permintaan, silakan coba lagi nanti."),
           );
         }
         if (e.error is HandshakeException) {
@@ -195,24 +172,24 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
             ServerFailure("Koneksi gagal: waktu permintaan habis."),
           );
         }
-
-        return Left(ServerFailure("Ada kesalahan: $errorMessage"));
+        return Left(
+          ServerFailure(
+            "Ada kesalahan: $errorMessage",
+            error: e.response?.data,
+            statusCode: statusCode,
+          ),
+        );
     }
   }
 
   Future<void> _logError(Object error, [StackTrace? stackTrace]) async {
-    // Check if the error is DioException to log request and response details
     if (error is DioException) {
       final requestOptions = error.requestOptions;
-
-      // Prepare detailed information about the request
       final requestInfo = {
         "url": requestOptions.uri.toString(),
         "headers": requestOptions.headers,
         "data": requestOptions.data,
       };
-
-      // Prepare detailed information about the response (if available)
       final responseInfo = error.response != null
           ? {
               "status_code": error.response?.statusCode,
@@ -221,8 +198,6 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
               "error": error,
             }
           : {"error": "No response received"};
-
-      // Add details to Firebase Crashlytics as custom keys
       FirebaseCrashlytics.instance
           .setCustomKey("request_url", requestOptions.uri.toString());
       FirebaseCrashlytics.instance
@@ -245,8 +220,6 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
           error.response?.data?.toString() ?? "No data",
         );
       }
-
-      // Add breadcrumb to Sentry for debugging
       Sentry.addBreadcrumb(
         Breadcrumb(
           category: "http",
@@ -258,8 +231,6 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
           level: SentryLevel.error,
         ),
       );
-
-      // Include request and response details in the error sent to Sentry
       await Sentry.captureException(
         error,
         stackTrace: stackTrace,
@@ -269,18 +240,13 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
         },
       );
     } else {
-      // Log non-Dio errors to Sentry
       await Sentry.captureException(error, stackTrace: stackTrace);
     }
-
-    // Log the error to Firebase Crashlytics with additional details
     FirebaseCrashlytics.instance.recordError(
       error,
       stackTrace,
       printDetails: true,
     );
-
-    // Log non-fatal errors to the internal logging system (if not in unit tests)
     if (!isUnitTest) {
       nonFatalError(error: error, stackTrace: stackTrace ?? StackTrace.current);
     }

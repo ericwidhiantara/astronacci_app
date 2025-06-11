@@ -14,17 +14,55 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   /// Controller
+  final _conName = TextEditingController();
   final _conEmail = TextEditingController();
   final _conPassword = TextEditingController();
   final _conPasswordRepeat = TextEditingController();
 
   /// Focus Node
+  final _fnName = FocusNode();
   final _fnEmail = FocusNode();
   final _fnPassword = FocusNode();
   final _fnPasswordRepeat = FocusNode();
 
   /// Global key form
   final _keyForm = GlobalKey<FormState>();
+
+  Map<String, List<String>> _fieldErrors = {};
+
+  @override
+  void initState() {
+    super.initState();
+
+    _conName.addListener(() => _clearFieldError('name'));
+    _conEmail.addListener(() => _clearFieldError('email'));
+    _conPassword.addListener(() => _clearFieldError('password'));
+    _conPasswordRepeat
+        .addListener(() => _clearFieldError('password_confirmation'));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _conName.dispose();
+    _conEmail.dispose();
+    _conPassword.dispose();
+    _conPasswordRepeat.dispose();
+    _fnName.dispose();
+    _fnEmail.dispose();
+    _fnPassword.dispose();
+    _fnPasswordRepeat.dispose();
+  }
+
+  void _clearFieldError(String key) {
+    if (_fieldErrors.containsKey(key)) {
+      setState(() {
+        _fieldErrors.remove(key);
+      });
+
+      _keyForm.currentState?.validate();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +73,16 @@ class _RegisterPageState extends State<RegisterPage> {
           RegisterStateLoading() => context.show(),
           RegisterStateSuccess(:final data) => (() {
               context.dismiss();
-              data.toString().toToastSuccess(context);
+              data?.meta?.message.toString().toToastSuccess(context);
 
               context.goNamed(Routes.root.name);
             })(),
-          RegisterStateFailure(:final message) => (() {
+          RegisterStateFailure(:final errors, :final message) => (() {
               context.dismiss();
+              setState(() {
+                _fieldErrors =
+                    Map<String, List<String>>.from(errors?.fields ?? {});
+              });
               message.toToastError(context);
             })(),
           _ => {},
@@ -64,23 +106,52 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SpacerV(),
                     TextF(
+                      key: const Key("name"),
+                      curFocusNode: _fnName,
+                      nextFocusNode: _fnEmail,
+                      textInputAction: TextInputAction.next,
+                      controller: _conName,
+                      keyboardType: TextInputType.text,
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      ),
+                      hintText: 'Enter your name',
+                      hint: Strings.of(context)!.full_name,
+                      textCapitalization: TextCapitalization.words,
+                      validator: (String? value) {
+                        if (_fieldErrors.containsKey('name')) {
+                          return _fieldErrors['name']?.first;
+                        }
+                        if (value != null && value.isEmpty) {
+                          return Strings.of(context)?.errorEmptyField;
+                        }
+                        return null;
+                      },
+                    ),
+                    TextF(
                       key: const Key("email"),
                       curFocusNode: _fnEmail,
                       nextFocusNode: _fnPassword,
                       textInputAction: TextInputAction.next,
                       controller: _conEmail,
                       keyboardType: TextInputType.emailAddress,
+                      textCapitalization: TextCapitalization.none,
                       prefixIcon: Icon(
                         Icons.alternate_email,
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                       hintText: 'johndoe@gmail.com',
                       hint: Strings.of(context)!.email,
-                      validator: (String? value) => value != null
-                          ? (!value.isValidEmail()
-                              ? Strings.of(context)?.errorInvalidEmail
-                              : null)
-                          : null,
+                      validator: (String? value) {
+                        if (_fieldErrors.containsKey('email')) {
+                          return _fieldErrors['email']?.first;
+                        }
+                        if (value != null && !value.isValidEmail()) {
+                          return Strings.of(context)?.errorInvalidEmail;
+                        }
+                        return null;
+                      },
                     ),
                     BlocBuilder<RegisterCubit, RegisterState>(
                       builder: (_, state) {
@@ -122,11 +193,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                       : Icons.visibility,
                                 ),
                               ),
-                              validator: (String? value) => value != null
-                                  ? (value.length < 6
-                                      ? Strings.of(context)!.errorPasswordLength
-                                      : null)
-                                  : null,
+                              validator: (String? value) {
+                                if (_fieldErrors.containsKey('password')) {
+                                  return _fieldErrors['password']?.first;
+                                }
+                                if (value != null && value.length < 6) {
+                                  return Strings.of(context)
+                                      ?.errorPasswordLength;
+                                }
+                                return null;
+                              },
                               semantic: "password",
                             ),
                             TextF(
@@ -164,12 +240,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                       : Icons.visibility,
                                 ),
                               ),
-                              validator: (String? value) => value != null
-                                  ? (value != _conPassword.text
-                                      ? Strings.of(context)
-                                          ?.errorPasswordNotMatch
-                                      : null)
-                                  : null,
+                              validator: (String? value) {
+                                if (_fieldErrors
+                                    .containsKey('password_confirmation')) {
+                                  return _fieldErrors['password_confirmation']
+                                      ?.first;
+                                }
+                                if (value != null &&
+                                    value != _conPassword.text) {
+                                  return Strings.of(context)
+                                      ?.errorPasswordNotMatch;
+                                }
+                                return null;
+                              },
                               semantic: "repeat_password",
                             ),
                           ],
@@ -185,8 +268,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (_keyForm.currentState?.validate() ?? false) {
                           context.read<RegisterCubit>().register(
                                 RegisterParams(
+                                  name: _conName.text,
                                   email: _conEmail.text,
                                   password: _conPassword.text,
+                                  passwordConfirmation: _conPasswordRepeat.text,
                                 ),
                               );
                         }

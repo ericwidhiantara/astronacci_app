@@ -1,2 +1,2 @@
 export 'login_entity.dart';
-export 'register.dart';
+export 'register_entity.dart';
