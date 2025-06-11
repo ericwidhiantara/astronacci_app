@@ -1,3 +1,4 @@
+import 'package:boilerplate/core/core.dart';
 import 'package:boilerplate/features/features.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class UserListItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: Colors.grey[900],
+            color: Theme.of(context).extension<CustomColor>()!.primary,
             borderRadius: BorderRadius.circular(12),
           ),
           child: ListTile(
@@ -29,6 +30,7 @@ class UserListItem extends StatelessWidget {
               style: const TextStyle(color: Colors.white70),
             ),
             leading: CircleAvatar(
+              backgroundColor: Palette.white,
               backgroundImage: NetworkImage(item.avatarUrl ?? ""),
             ),
           ),
