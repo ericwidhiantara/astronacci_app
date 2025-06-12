@@ -70,7 +70,7 @@ class UserDetailCard extends StatelessWidget {
                 "EEEE, dd MMMM yyyy",
                 state.type == "en" ? "en" : "id",
               ).format(
-                DateTime.parse(user.dateOfBirth ?? ""),
+                DateTime.parse(user.dateOfBirth ?? DateTime.now().toString()),
               ),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
