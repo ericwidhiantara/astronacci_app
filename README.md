@@ -1,8 +1,12 @@
 <br>
 
-# TDD Boilerplate 📱
+# Astronacci APP 📱
 
-This is an app boilertplate to easily create flutter project using TDD and Bloc State Management
+This is a Flutter project for **Astronacci** app.
+
+# Backend API
+
+- [Backend API](https://github.com/ericwidhiantara/astronacci-api.git)
 
 ## Pre-requisites 📐
 
@@ -13,11 +17,16 @@ This is an app boilertplate to easily create flutter project using TDD and Bloc 
 
 ## Get Started 🚀
 
-- Clone this project using `git clone https://github.com/ericwidhiantara/surveillance.git`
+- Clone this project using `git clone https://github.com/ericwidhiantara/astronacci_app.git`
 - Run `flutter pub get`
 - Run `flutter gen-l10n` to generate localization files
 - Run `dart run build_runner build --delete-conflicting-outputs` to generate required files
   (freezed, mocks, .g, etc)
+- Make sure your server is up and running
+- Make sure you already set the Env variable in `.env.prd.json` and `.env.dev.json`, set the Base
+  URL to match your
+  server
+- You are ready to go
 
 ## Optionals 🚀
 
