@@ -1,3 +1,4 @@
+import java.io.FileInputStream
 import java.nio.charset.StandardCharsets.UTF_8
 import java.util.Properties
 
@@ -7,6 +8,13 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+}
+
+
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("app/key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 val localProperties = Properties()
@@ -53,10 +61,18 @@ android {
 //        multiDexEnabled = true // Changed multiDex to multiDexEnabled
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
     buildTypes {
         getByName("release") {
             // TODO: Add your own signing config for the release build.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -72,14 +88,14 @@ android {
             dimension = "env"
             versionNameSuffix = "-dev"
             applicationIdSuffix = ".dev"
-            resValue("string", "app_name", "Boilerplate Dev")
+            resValue("string", "app_name", "Astronacci Dev")
             // TODO: Enable this if you want to sign your app
             // signingConfig = signingConfigs.release
         }
 
         create("prd") {
             dimension = "env"
-            resValue("string", "app_name", "Boilerplate")
+            resValue("string", "app_name", "Astronacci")
             // TODO: Enable this if you want to sign your app
             // signingConfig = signingConfigs.release
         }
