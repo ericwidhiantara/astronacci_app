@@ -1,3 +1,4 @@
+export 'general_api_response.dart';
 export 'jwt_model.dart';
 export 'meta_response.dart';
 export 'nav_bar_item.dart';

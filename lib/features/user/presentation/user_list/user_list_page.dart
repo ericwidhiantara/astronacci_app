@@ -54,6 +54,21 @@ class _UserListPageState extends State<UserListPage> {
               ),
               side: BorderSide(color: Theme.of(context).primaryColor),
             ),
+            onPressed: () => context.pushNamed(Routes.userProfile.name),
+            icon: Icon(
+              Icons.person,
+              color: Theme.of(context).primaryColor,
+              size: Dimens.size20,
+            ),
+          ),
+          IconButton(
+            splashColor: Palette.primary500,
+            style: OutlinedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimens.size12),
+              ),
+              side: BorderSide(color: Theme.of(context).primaryColor),
+            ),
             onPressed: () => showDialog(
               context: context,
               builder: (context) => const CustomLogoutDialog(),
@@ -63,7 +78,7 @@ class _UserListPageState extends State<UserListPage> {
               color: Theme.of(context).primaryColor,
               size: Dimens.size20,
             ),
-          )
+          ),
         ],
       ),
       child: Padding(

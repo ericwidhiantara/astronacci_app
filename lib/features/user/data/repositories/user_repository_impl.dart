@@ -1,5 +1,6 @@
 import 'package:boilerplate/core/core.dart';
 import 'package:boilerplate/features/features.dart';
+import 'package:boilerplate/utils/utils.dart';
 import 'package:dartz/dartz.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -13,6 +14,28 @@ class UserRepositoryImpl implements UserRepository {
     GetUserListParams params,
   ) async {
     final response = await _datasource.getUserList(params);
+
+    return response.fold(
+      (failure) => Left(failure),
+      (response) => Right(response.toEntity()),
+    );
+  }
+
+  @override
+  Future<Either<Failure, UserProfileEntity>> getUserProfile() async {
+    final response = await _datasource.getUserProfile();
+
+    return response.fold(
+      (failure) => Left(failure),
+      (response) => Right(response.toEntity()),
+    );
+  }
+
+  @override
+  Future<Either<Failure, GeneralAPIEntity>> changeProfilePicture(
+    PostChangeProfilePictureParams params,
+  ) async {
+    final response = await _datasource.changeProfilePicture(params);
 
     return response.fold(
       (failure) => Left(failure),

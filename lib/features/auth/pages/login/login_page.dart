@@ -25,6 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   /// Global key
   final _keyForm = GlobalKey<FormState>();
 
+  bool _isLoginSuccess = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -45,7 +47,13 @@ class _LoginPageState extends State<LoginPage> {
               data?.meta?.message.toString().toToastSuccess(context);
 
               TextInput.finishAutofillContext();
-              context.goNamed(Routes.root.name);
+              setState(() {
+                _isLoginSuccess = true;
+              });
+              Future.delayed(const Duration(seconds: 2)).then((value) {
+                if (!context.mounted) return;
+                context.goNamed(Routes.root.name);
+              });
             })(),
           AuthStateFailure(:final message) => (() {
               context.dismiss();
@@ -80,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                         textInputAction: TextInputAction.next,
                         controller: _conEmail,
                         keyboardType: TextInputType.emailAddress,
+                        textCapitalization: TextCapitalization.none,
                         prefixIcon: Icon(
                           Icons.alternate_email,
                           color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -135,16 +144,19 @@ class _LoginPageState extends State<LoginPage> {
                       SpacerV(value: Dimens.space24),
                       Button(
                         title: Strings.of(context)!.login,
-                        onPressed: () {
-                          if (_keyForm.currentState?.validate() ?? false) {
-                            context.read<AuthCubit>().login(
-                                  LoginParams(
-                                    email: _conEmail.text,
-                                    password: _conPassword.text,
-                                  ),
-                                );
-                          }
-                        },
+                        onPressed: _isLoginSuccess
+                            ? null
+                            : () {
+                                if (_keyForm.currentState?.validate() ??
+                                    false) {
+                                  context.read<AuthCubit>().login(
+                                        LoginParams(
+                                          email: _conEmail.text,
+                                          password: _conPassword.text,
+                                        ),
+                                      );
+                                }
+                              },
                       ),
                       ButtonText(
                         title: Strings.of(context)!.askRegister,

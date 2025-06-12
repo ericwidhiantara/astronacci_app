@@ -31,6 +31,7 @@ enum Routes {
 
   // User
   users("/users"),
+  userProfile("/user/profile"),
   ;
 
   const Routes(this.path);
@@ -186,6 +187,21 @@ class AppRoute {
                 : args['imageBytes'] as Uint8List,
           );
         },
+      ),
+      GoRoute(
+        path: Routes.userProfile.path,
+        name: Routes.userProfile.name,
+        builder: (_, __) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => sl<ProfilePictureCubit>(),
+            ),
+            BlocProvider(
+              create: (_) => sl<UserProfileCubit>()..fetchUserProfile(),
+            ),
+          ],
+          child: const UserProfilePage(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (

@@ -5,18 +5,18 @@ class SettingsCubit extends Cubit<DataHelper> with MainBoxMixin {
   SettingsCubit() : super(DataHelper(type: "en"));
 
   void updateTheme(ActiveTheme activeTheme) {
-    addData(MainBoxKeys.theme, activeTheme.name);
+    addData<String>(MainBoxKeys.theme, activeTheme.name);
     emit(
       DataHelper(
         activeTheme: activeTheme,
-        type: getData(MainBoxKeys.locale) ?? "en",
+        type: getData<String>(MainBoxKeys.locale) ?? "en",
       ),
     );
   }
 
   void updateLanguage(String type) {
     /// Update locale code
-    addData(MainBoxKeys.locale, type);
+    addData<String>(MainBoxKeys.locale, type);
     emit(DataHelper(type: type, activeTheme: getActiveTheme()));
   }
 
@@ -24,12 +24,13 @@ class SettingsCubit extends Cubit<DataHelper> with MainBoxMixin {
     final activeTheme = ActiveTheme.values.singleWhere(
       (element) =>
           element.name ==
-          (getData(MainBoxKeys.theme) ?? ActiveTheme.system.name),
+          (getData<String>(MainBoxKeys.theme) ?? ActiveTheme.system.name),
     );
+    log.d("activeTheme : ${activeTheme.name}");
     emit(
       DataHelper(
         activeTheme: activeTheme,
-        type: getData(MainBoxKeys.locale) ?? "en",
+        type: getData<String>(MainBoxKeys.locale) ?? "en",
       ),
     );
     return activeTheme;

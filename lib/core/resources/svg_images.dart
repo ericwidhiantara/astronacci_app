@@ -1,6 +1,7 @@
 class SvgImages {
   SvgImages._();
 
+  static String icAddPhoto = "assets/svg/ic_add_photo.svg";
   static String icArrowBackward = "assets/svg/ic_arrow_backward.svg";
   static String icArrowDown = "assets/svg/ic_arrow_down.svg";
   static String icArrowForward = "assets/svg/ic_arrow_forward.svg";

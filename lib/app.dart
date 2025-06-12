@@ -1,7 +1,7 @@
 import 'package:boilerplate/core/core.dart';
 import 'package:boilerplate/dependencies_injection.dart';
 import 'package:boilerplate/features/features.dart';
-import 'package:boilerplate/utils/helper/helper.dart';
+import 'package:boilerplate/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,9 +21,7 @@ class App extends StatelessWidget {
     log.d(const String.fromEnvironment('ENV'));
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => sl<SettingsCubit>()..getActiveTheme(),
-        ),
+        BlocProvider(create: (_) => sl<SettingsCubit>()..getActiveTheme()),
         BlocProvider(create: (_) => sl<AuthCubit>()),
         BlocProvider(create: (_) => sl<AppVersionCubit>()..fetchAppVersion()),
       ],
@@ -40,33 +38,36 @@ class App extends StatelessWidget {
             AppRoute.setStream(context);
 
             return BlocBuilder<SettingsCubit, DataHelper>(
-              builder: (_, data) => MaterialApp.router(
-                routerConfig: AppRoute.router,
-                localizationsDelegates: const [
-                  Strings.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                debugShowCheckedModeBanner: false,
-                builder: (BuildContext context, Widget? child) {
-                  final MediaQueryData data = MediaQuery.of(context);
+              builder: (_, data) {
+                log.i("Active Theme: ${data.activeTheme.mode}");
+                log.i("Active Locale: ${data.type}");
+                return MaterialApp.router(
+                  routerConfig: AppRoute.router,
+                  localizationsDelegates: const [
+                    Strings.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  debugShowCheckedModeBanner: false,
+                  builder: (BuildContext context, Widget? child) {
+                    final MediaQueryData data = MediaQuery.of(context);
 
-                  return MediaQuery(
-                    data: data.copyWith(
-                      alwaysUse24HourFormat: true,
-                      textScaler: TextScaler.noScaling,
-                    ),
-                    child: child!,
-                  );
-                },
-                title: Constants.get.appName,
-                theme: themeLight(context),
-                darkTheme: themeDark(context),
-                locale: Locale(data.type ?? "en"),
-                supportedLocales: L10n.all,
-                themeMode: data.activeTheme.mode,
-              ),
+                    return MediaQuery(
+                      data: data.copyWith(
+                        alwaysUse24HourFormat: true,
+                      ),
+                      child: child!,
+                    );
+                  },
+                  title: Constants.get.appName,
+                  theme: themeLight(context),
+                  darkTheme: themeDark(context),
+                  locale: Locale(data.type ?? "en"),
+                  supportedLocales: L10n.all,
+                  themeMode: data.activeTheme.mode,
+                );
+              },
             );
           },
         ),

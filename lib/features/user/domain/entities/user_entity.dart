@@ -2,6 +2,7 @@ import 'package:boilerplate/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_entity.freezed.dart';
+part 'user_entity.g.dart';
 
 @freezed
 abstract class UserEntity with _$UserEntity {
@@ -63,4 +64,7 @@ abstract class UserDataEntity with _$UserDataEntity {
   }) = _UserDataEntity;
 
   const UserDataEntity._();
+
+  factory UserDataEntity.fromJson(Map<String, dynamic> json) =>
+      _$UserDataEntityFromJson(json);
 }

@@ -73,6 +73,8 @@ void _useCase() {
 
   // User
   sl.registerLazySingleton(() => GetUserListUsecase(sl()));
+  sl.registerLazySingleton(() => GetUserProfileUsecase(sl()));
+  sl.registerLazySingleton(() => PostChangeProfilePictureUsecase(sl()));
 }
 
 void _cubit() {
@@ -87,4 +89,6 @@ void _cubit() {
 
   // User
   sl.registerFactory(() => UserListCubit(sl()));
+  sl.registerFactory(() => UserProfileCubit(sl()));
+  sl.registerFactory(() => ProfilePictureCubit(sl()));
 }
