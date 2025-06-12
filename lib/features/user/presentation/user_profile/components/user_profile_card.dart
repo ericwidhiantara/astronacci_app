@@ -212,7 +212,15 @@ class _UserProfileCardState extends State<UserProfileCard> with MainBoxMixin {
           ),
           SpacerV(value: Dimens.size16),
           ListTile(
-            onTap: () {},
+            onTap: () async {
+              final result = await context.pushNamed(
+                Routes.updateProfile.name,
+                extra: widget.user,
+              );
+              if (result != null && result == true && context.mounted) {
+                context.read<UserProfileCubit>().fetchUserProfile();
+              }
+            },
             title: Text(
               Strings.of(context)!.updateProfile,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

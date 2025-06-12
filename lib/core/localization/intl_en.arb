@@ -66,5 +66,6 @@
   "changeProfilePicture": "Change Profile Picture",
   "changeProfilePictureDesc": "Are you sure you want to change your profile picture?",
   "search": "Search...",
-  "updateProfile": "Update Profile"
+  "updateProfile": "Update Profile",
+  "save": "Save"
 }

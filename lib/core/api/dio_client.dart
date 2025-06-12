@@ -173,10 +173,13 @@ class DioClient with MainBoxMixin, FirebaseCrashLogger {
             "Kesalahan tidak diketahui.";
         final statusCode = e.response?.statusCode;
         log.e("Error: ${e.error} ${e.response} $e");
-        if (statusCode == 401 ||
-            e.response?.data["message"] == "Unauthorized") {
+        if (statusCode == 401 &&
+                e.response?.data["message"] == "Unauthorized" ||
+            e.response?.data["meta"]["message"] == "Unauthorized") {
           sl<AuthCubit>().logout();
           return Left(UnauthorizedFailure(errorMessage.toString()));
+        } else if (statusCode == 401) {
+          return Left(ServerFailure(errorMessage.toString()));
         }
         if (statusCode == 429) {
           return const Left(

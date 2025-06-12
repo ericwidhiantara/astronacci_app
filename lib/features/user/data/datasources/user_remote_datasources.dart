@@ -20,6 +20,9 @@ abstract class UserRemoteDatasource {
   Future<Either<Failure, GeneralAPIResponse>> changePassword(
     PostChangePasswordParams params,
   );
+
+  Future<Either<Failure, UserProfileResponse>> updateProfile(
+      PostUpdateProfileParams params);
 }
 
 class UserRemoteDatasourceImpl implements UserRemoteDatasource {
@@ -129,6 +132,30 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
           return GeneralAPIResponse.fromJson(response);
         }
         return GeneralAPIResponse(
+          meta: MetaResponse(
+            code: 500,
+            status: "error",
+            message: "Terjadi kesalahan pada server, $response",
+          ),
+        );
+      },
+    );
+
+    return response;
+  }
+
+  @override
+  Future<Either<Failure, UserProfileResponse>> updateProfile(
+    PostUpdateProfileParams params,
+  ) async {
+    final response = await _client.postRequest(
+      ListAPI.updateProfile,
+      data: params.toJson(),
+      converter: (response) {
+        if (response is Map<String, dynamic>) {
+          return UserProfileResponse.fromJson(response);
+        }
+        return UserProfileResponse(
           meta: MetaResponse(
             code: 500,
             status: "error",

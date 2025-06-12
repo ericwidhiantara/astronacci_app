@@ -33,6 +33,7 @@ enum Routes {
   users("/users"),
   userProfile("/user/profile"),
   changePassword("/user/profile/change-password"),
+  updateProfile("/user/profile/update"),
   ;
 
   const Routes(this.path);
@@ -220,6 +221,21 @@ class AppRoute {
           child: const ChangePasswordPage(),
         ),
       ),
+      GoRoute(
+          path: Routes.updateProfile.path,
+          name: Routes.updateProfile.name,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, state) {
+            final UserDataEntity? profile = state.extra as UserDataEntity?;
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (_) => sl<UpdateProfileCubit>(),
+                ),
+              ],
+              child: UpdateProfilePage(profile: profile!),
+            );
+          }),
       StatefulShellRoute.indexedStack(
         builder: (
           BuildContext context,

@@ -66,5 +66,6 @@
   "changeProfilePicture": "Ubah Foto Profil",
   "changeProfilePictureDesc": "Apakah anda yakin ingin mengubah foto profil anda?",
   "search": "Cari...",
-  "updateProfile": "Perbarui Profil"
+  "updateProfile": "Perbarui Profil",
+  "save": "Simpan"
 }
