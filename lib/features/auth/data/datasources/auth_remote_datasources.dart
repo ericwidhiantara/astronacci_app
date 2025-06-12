@@ -9,6 +9,10 @@ abstract class AuthRemoteDatasource {
   Future<Either<Failure, LoginResponse>> login(LoginParams params);
 
   Future<Either<Failure, GeneralAPIResponse>> logout();
+
+  Future<Either<Failure, GeneralAPIResponse>> forgotPassword(
+    ForgotPasswordParams params,
+  );
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -46,6 +50,20 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   Future<Either<Failure, GeneralAPIResponse>> logout() async {
     final response = await _client.postRequest(
       ListAPI.logout,
+      converter: (response) =>
+          GeneralAPIResponse.fromJson(response as Map<String, dynamic>),
+    );
+
+    return response;
+  }
+
+  @override
+  Future<Either<Failure, GeneralAPIResponse>> forgotPassword(
+    ForgotPasswordParams params,
+  ) async {
+    final response = await _client.postRequest(
+      ListAPI.forgotPassword,
+      data: params.toJson(),
       converter: (response) =>
           GeneralAPIResponse.fromJson(response as Map<String, dynamic>),
     );

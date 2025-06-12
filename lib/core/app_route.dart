@@ -15,6 +15,7 @@ enum Routes {
   // Auth Page
   login("/auth/login"),
   register("/auth/register"),
+  forgotPassword("/auth/forgot-password"),
 
   // Navbar
   home("/homes"),
@@ -257,6 +258,19 @@ class AppRoute {
             child: UserDetailPage(userId: userId!),
           );
         },
+      ),
+      GoRoute(
+        path: Routes.forgotPassword.path,
+        name: Routes.forgotPassword.name,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (_, __) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => sl<ForgotPasswordCubit>(),
+            ),
+          ],
+          child: const ForgotPasswordPage(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (

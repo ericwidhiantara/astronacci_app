@@ -141,6 +141,16 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         },
                       ),
+                      SpacerV(value: Dimens.size16),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          child: Text(Strings.of(context)!.forgotYourPassword),
+                          onPressed: () {
+                            context.pushNamed(Routes.forgotPassword.name);
+                          },
+                        ),
+                      ),
                       SpacerV(value: Dimens.space24),
                       Button(
                         title: Strings.of(context)!.login,

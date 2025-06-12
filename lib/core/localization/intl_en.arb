@@ -67,5 +67,9 @@
   "changeProfilePictureDesc": "Are you sure you want to change your profile picture?",
   "search": "Search...",
   "updateProfile": "Update Profile",
-  "save": "Save"
+  "save": "Save",
+  "forgotPassword": "Forgot Password",
+  "forgotPasswordDesc": "Enter your email address to reset your password",
+  "send": "Send",
+  "forgotYourPassword": "Forgot your password?"
 }

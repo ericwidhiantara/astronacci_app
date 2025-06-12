@@ -9,4 +9,8 @@ abstract class AuthRepository {
   Future<Either<Failure, RegisterEntity>> register(RegisterParams params);
 
   Future<Either<Failure, GeneralAPIEntity>> logout();
+
+  Future<Either<Failure, GeneralAPIEntity>> forgotPassword(
+    ForgotPasswordParams params,
+  );
 }

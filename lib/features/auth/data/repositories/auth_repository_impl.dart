@@ -48,4 +48,16 @@ class AuthRepositoryImpl implements AuthRepository {
       (response) => Right(response.toEntity()),
     );
   }
+
+  @override
+  Future<Either<Failure, GeneralAPIEntity>> forgotPassword(
+    ForgotPasswordParams params,
+  ) async {
+    final response = await _dataSource.forgotPassword(params);
+
+    return response.fold(
+      (failure) => Left(failure),
+      (response) => Right(response.toEntity()),
+    );
+  }
 }

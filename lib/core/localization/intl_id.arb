@@ -67,5 +67,9 @@
   "changeProfilePictureDesc": "Apakah anda yakin ingin mengubah foto profil anda?",
   "search": "Cari...",
   "updateProfile": "Perbarui Profil",
-  "save": "Simpan"
+  "save": "Simpan",
+  "forgotPassword": "Lupa Kata Sandi",
+  "forgotPasswordDesc": "Masukkan alamat email anda untuk mengatur ulang kata sandi",
+  "send": "Kirim",
+  "forgotYourPassword": "Lupa kata sandi?"
 }

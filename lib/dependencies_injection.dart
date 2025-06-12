@@ -68,6 +68,7 @@ void _useCase() {
   sl.registerLazySingleton(() => PostLoginUsecase(sl()));
   sl.registerLazySingleton(() => PostRegisterUsecase(sl()));
   sl.registerLazySingleton(() => PostLogoutUsecase(sl()));
+  sl.registerLazySingleton(() => PostForgotPasswordUsecase(sl()));
 
   // General
   sl.registerLazySingleton(() => CheckAppVersionUsecase(sl()));
@@ -85,6 +86,8 @@ void _cubit() {
   /// Auth
   sl.registerFactory(() => RegisterCubit(sl()));
   sl.registerFactory(() => AuthCubit(sl()));
+  sl.registerFactory(() => LogoutCubit(sl()));
+  sl.registerFactory(() => ForgotPasswordCubit(sl()));
 
   // General
   sl.registerFactory(() => MainCubit());
@@ -99,5 +102,4 @@ void _cubit() {
   sl.registerFactory(() => ChangePasswordCubit(sl()));
   sl.registerFactory(() => UpdateProfileCubit(sl()));
   sl.registerFactory(() => UserDetailCubit(sl()));
-  sl.registerFactory(() => LogoutCubit(sl()));
 }
