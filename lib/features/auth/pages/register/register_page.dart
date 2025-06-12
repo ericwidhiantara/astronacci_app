@@ -30,6 +30,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Map<String, List<String>> _fieldErrors = {};
 
+  bool _isRegisterSuccess = false;
+
   @override
   void initState() {
     super.initState();
@@ -77,7 +79,13 @@ class _RegisterPageState extends State<RegisterPage> {
               context.dismiss();
               data?.meta?.message.toString().toToastSuccess(context);
 
-              context.goNamed(Routes.root.name);
+              setState(() {
+                _isRegisterSuccess = true;
+              });
+              Future.delayed(const Duration(seconds: 2)).then((value) {
+                if (!context.mounted) return;
+                context.goNamed(Routes.root.name);
+              });
             })(),
           RegisterStateFailure(:final errors, :final message) => (() {
               context.dismiss();
@@ -265,19 +273,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     Button(
                       key: const Key("btn_register"),
                       title: Strings.of(context)!.register,
-                      onPressed: () {
-                        /// Validate form first
-                        if (_keyForm.currentState?.validate() ?? false) {
-                          context.read<RegisterCubit>().register(
-                                RegisterParams(
-                                  name: _conName.text,
-                                  email: _conEmail.text,
-                                  password: _conPassword.text,
-                                  passwordConfirmation: _conPasswordRepeat.text,
-                                ),
-                              );
-                        }
-                      },
+                      onPressed: _isRegisterSuccess
+                          ? null
+                          : () {
+                              /// Validate form first
+                              if (_keyForm.currentState?.validate() ?? false) {
+                                context.read<RegisterCubit>().register(
+                                      RegisterParams(
+                                        name: _conName.text,
+                                        email: _conEmail.text,
+                                        password: _conPassword.text,
+                                        passwordConfirmation:
+                                            _conPasswordRepeat.text,
+                                      ),
+                                    );
+                              }
+                            },
                     ),
                   ],
                 ),
