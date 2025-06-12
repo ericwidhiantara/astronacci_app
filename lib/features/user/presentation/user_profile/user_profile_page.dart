@@ -9,9 +9,7 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      appBar: const CustomAppBar(
-        title: "User Profile",
-      ),
+      appBar: CustomAppBar(title: Strings.of(context)!.userProfile),
       child: Padding(
         padding: EdgeInsets.all(Dimens.size16),
         child: BlocBuilder<UserProfileCubit, UserProfileState>(

@@ -13,4 +13,8 @@ abstract class UserRepository {
   Future<Either<Failure, GeneralAPIEntity>> changeProfilePicture(
     PostChangeProfilePictureParams params,
   );
+
+  Future<Either<Failure, GeneralAPIEntity>> changePassword(
+    PostChangePasswordParams params,
+  );
 }

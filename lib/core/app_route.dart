@@ -32,6 +32,7 @@ enum Routes {
   // User
   users("/users"),
   userProfile("/user/profile"),
+  changePassword("/user/profile/change-password"),
   ;
 
   const Routes(this.path);
@@ -201,6 +202,22 @@ class AppRoute {
             ),
           ],
           child: const UserProfilePage(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.changePassword.path,
+        name: Routes.changePassword.name,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (_, __) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => sl<PasswordCubit>(),
+            ),
+            BlocProvider(
+              create: (_) => sl<ChangePasswordCubit>(),
+            ),
+          ],
+          child: const ChangePasswordPage(),
         ),
       ),
       StatefulShellRoute.indexedStack(

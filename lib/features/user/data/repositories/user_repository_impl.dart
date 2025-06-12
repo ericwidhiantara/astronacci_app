@@ -42,4 +42,16 @@ class UserRepositoryImpl implements UserRepository {
       (response) => Right(response.toEntity()),
     );
   }
+
+  @override
+  Future<Either<Failure, GeneralAPIEntity>> changePassword(
+    PostChangePasswordParams params,
+  ) async {
+    final response = await _datasource.changePassword(params);
+
+    return response.fold(
+      (failure) => Left(failure),
+      (response) => Right(response.toEntity()),
+    );
+  }
 }

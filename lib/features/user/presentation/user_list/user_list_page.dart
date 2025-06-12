@@ -44,7 +44,7 @@ class _UserListPageState extends State<UserListPage> {
   Widget build(BuildContext context) {
     return Parent(
       appBar: CustomAppBar(
-        title: "User List",
+        title: Strings.of(context)!.userList,
         actions: [
           IconButton(
             splashColor: Palette.primary500,

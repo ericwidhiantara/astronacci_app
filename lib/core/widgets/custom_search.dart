@@ -1,3 +1,4 @@
+import 'package:boilerplate/core/core.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearch extends StatelessWidget {
@@ -16,7 +17,7 @@ class CustomSearch extends StatelessWidget {
           child: TextField(
             style: const TextStyle(color: Colors.black),
             decoration: InputDecoration(
-              hintText: 'Search...',
+              hintText: Strings.of(context)!.search,
               hintStyle: const TextStyle(color: Colors.grey),
               prefixIcon: const Icon(Icons.search, color: Colors.grey),
               filled: true,

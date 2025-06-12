@@ -223,7 +223,7 @@ class _UserProfileCardState extends State<UserProfileCard> with MainBoxMixin {
             trailing: const Icon(Icons.arrow_forward_ios_outlined),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () => context.pushNamed(Routes.changePassword.name),
             title: Text(
               Strings.of(context)!.changePassword,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

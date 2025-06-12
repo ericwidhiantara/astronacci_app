@@ -9,4 +9,5 @@ class ListAPI {
   static const String getUserList = "/users";
   static const String getUserProfile = "/profile";
   static const String changeProfilePicture = "/profile/change-profile-picture";
+  static const String changePassword = "/profile/change-password";
 }
