@@ -415,7 +415,11 @@ class _UserProfileCardState extends State<UserProfileCard> with MainBoxMixin {
             trailing: const Icon(Icons.arrow_forward_ios_outlined),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => const CustomLogoutDialog());
+            },
             title: Text(
               Strings.of(context)!.logout,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

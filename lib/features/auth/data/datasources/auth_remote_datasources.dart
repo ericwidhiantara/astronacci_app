@@ -1,11 +1,14 @@
 import 'package:boilerplate/core/core.dart';
-import 'package:boilerplate/features/auth/auth.dart';
+import 'package:boilerplate/features/features.dart';
+import 'package:boilerplate/utils/utils.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AuthRemoteDatasource {
   Future<Either<Failure, RegisterResponse>> register(RegisterParams params);
 
   Future<Either<Failure, LoginResponse>> login(LoginParams params);
+
+  Future<Either<Failure, GeneralAPIResponse>> logout();
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -34,6 +37,17 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       data: params.toJson(),
       converter: (response) =>
           LoginResponse.fromJson(response as Map<String, dynamic>),
+    );
+
+    return response;
+  }
+
+  @override
+  Future<Either<Failure, GeneralAPIResponse>> logout() async {
+    final response = await _client.postRequest(
+      ListAPI.logout,
+      converter: (response) =>
+          GeneralAPIResponse.fromJson(response as Map<String, dynamic>),
     );
 
     return response;

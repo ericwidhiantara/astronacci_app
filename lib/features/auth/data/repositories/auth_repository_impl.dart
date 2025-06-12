@@ -38,4 +38,14 @@ class AuthRepositoryImpl implements AuthRepository {
       },
     );
   }
+
+  @override
+  Future<Either<Failure, GeneralAPIEntity>> logout() async {
+    final response = await _dataSource.logout();
+
+    return response.fold(
+      (failure) => Left(failure),
+      (response) => Right(response.toEntity()),
+    );
+  }
 }

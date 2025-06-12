@@ -23,6 +23,7 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => sl<SettingsCubit>()..getActiveTheme()),
         BlocProvider(create: (_) => sl<AuthCubit>()),
+        BlocProvider(create: (_) => sl<LogoutCubit>()),
         BlocProvider(create: (_) => sl<AppVersionCubit>()..fetchAppVersion()),
       ],
       child: OKToast(
