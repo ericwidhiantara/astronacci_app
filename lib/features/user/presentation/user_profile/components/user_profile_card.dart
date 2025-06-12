@@ -57,8 +57,8 @@ class _UserProfileCardState extends State<UserProfileCard> with MainBoxMixin {
             child: Column(
               children: [
                 TextButton(
-                  onPressed: () {
-                    showDialog(
+                  onPressed: () async {
+                    final res = await showDialog(
                       context: context,
                       builder: (context) {
                         return AlertDialog(
@@ -68,9 +68,8 @@ class _UserProfileCardState extends State<UserProfileCard> with MainBoxMixin {
                               Strings.of(context)!.changeProfilePictureDesc),
                           actions: [
                             TextButton(
-                              onPressed: () {
-                                context.pop();
-                                showModalBottomSheet(
+                              onPressed: () async {
+                                final result = await showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (BuildContext context) {
@@ -81,19 +80,21 @@ class _UserProfileCardState extends State<UserProfileCard> with MainBoxMixin {
                                       },
                                       onFilePicked: (File value) {
                                         debugPrint("ini value $value");
-                                        context.back();
-                                        context
-                                            .read<ProfilePictureCubit>()
-                                            .changeProfilePicture(
-                                              PostChangeProfilePictureParams(
-                                                image: value.path,
-                                              ),
-                                            );
+                                        context.back(true);
+                                        setState(() {
+                                          image = value;
+                                        });
                                       },
                                       isWithWatermark: false,
                                     );
                                   },
                                 );
+
+                                if (result != null &&
+                                    result == true &&
+                                    context.mounted) {
+                                  context.pop(true);
+                                }
                               },
                               child: Text(
                                 Strings.of(context)!.yes,
@@ -118,6 +119,13 @@ class _UserProfileCardState extends State<UserProfileCard> with MainBoxMixin {
                         );
                       },
                     );
+                    if (res != null && res == true && context.mounted) {
+                      context.read<ProfilePictureCubit>().changeProfilePicture(
+                            PostChangeProfilePictureParams(
+                              image: image!.path,
+                            ),
+                          );
+                    }
                   },
                   child: CachedNetworkImage(
                     imageUrl: widget.user.avatarUrl ??

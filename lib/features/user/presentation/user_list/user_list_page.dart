@@ -54,7 +54,14 @@ class _UserListPageState extends State<UserListPage> {
               ),
               side: BorderSide(color: Theme.of(context).primaryColor),
             ),
-            onPressed: () => context.pushNamed(Routes.userProfile.name),
+            onPressed: () async {
+              final res = await context.pushNamed(Routes.userProfile.name);
+              if (context.mounted && res == null) {
+                context.read<UserListCubit>().fetchUserList(
+                      const GetUserListParams(),
+                    );
+              }
+            },
             icon: Icon(
               Icons.person,
               color: Theme.of(context).primaryColor,
