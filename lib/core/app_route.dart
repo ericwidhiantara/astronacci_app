@@ -34,6 +34,7 @@ enum Routes {
   userProfile("/user/profile"),
   changePassword("/user/profile/change-password"),
   updateProfile("/user/profile/update"),
+  userDetail("/user/detail"),
   ;
 
   const Routes(this.path);
@@ -222,20 +223,41 @@ class AppRoute {
         ),
       ),
       GoRoute(
-          path: Routes.updateProfile.path,
-          name: Routes.updateProfile.name,
-          parentNavigatorKey: _rootNavigatorKey,
-          builder: (_, state) {
-            final UserDataEntity? profile = state.extra as UserDataEntity?;
-            return MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (_) => sl<UpdateProfileCubit>(),
-                ),
-              ],
-              child: UpdateProfilePage(profile: profile!),
-            );
-          }),
+        path: Routes.updateProfile.path,
+        name: Routes.updateProfile.name,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (_, state) {
+          final UserDataEntity? profile = state.extra as UserDataEntity?;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => sl<UpdateProfileCubit>(),
+              ),
+            ],
+            child: UpdateProfilePage(profile: profile!),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.userDetail.path,
+        name: Routes.userDetail.name,
+        builder: (_, state) {
+          final int? userId = state.extra as int?;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => sl<UserDetailCubit>()
+                  ..fetchUserDetail(
+                    GetUserDetailParams(
+                      id: userId!.toString(),
+                    ),
+                  ),
+              ),
+            ],
+            child: UserDetailPage(userId: userId!),
+          );
+        },
+      ),
       StatefulShellRoute.indexedStack(
         builder: (
           BuildContext context,

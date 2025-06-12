@@ -1,6 +1,7 @@
 import 'package:boilerplate/core/core.dart';
 import 'package:boilerplate/features/features.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UserListItem extends StatelessWidget {
   final UserDataEntity item;
@@ -20,7 +21,10 @@ class UserListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: ListTile(
-            onTap: () {},
+            onTap: () => context.pushNamed(
+              Routes.userDetail.name,
+              extra: item.id,
+            ),
             title: Text(
               item.name ?? "",
               style: const TextStyle(color: Colors.white),

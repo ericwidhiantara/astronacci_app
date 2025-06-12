@@ -77,6 +77,7 @@ void _useCase() {
   sl.registerLazySingleton(() => PostChangeProfilePictureUsecase(sl()));
   sl.registerLazySingleton(() => PostChangePasswordUsecase(sl()));
   sl.registerLazySingleton(() => PostUpdateProfileUsecase(sl()));
+  sl.registerLazySingleton(() => GetUserDetailUsecase(sl()));
 }
 
 void _cubit() {
@@ -96,4 +97,5 @@ void _cubit() {
   sl.registerFactory(() => PasswordCubit());
   sl.registerFactory(() => ChangePasswordCubit(sl()));
   sl.registerFactory(() => UpdateProfileCubit(sl()));
+  sl.registerFactory(() => UserDetailCubit(sl()));
 }

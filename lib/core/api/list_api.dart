@@ -11,4 +11,5 @@ class ListAPI {
   static const String changeProfilePicture = "/profile/change-profile-picture";
   static const String changePassword = "/profile/change-password";
   static const String updateProfile = "/profile/update";
+  static const String getUserDetail = "/users";
 }

@@ -66,4 +66,15 @@ class UserRepositoryImpl implements UserRepository {
       (response) => Right(response.toEntity()),
     );
   }
+
+  @override
+  Future<Either<Failure, UserProfileEntity>> getUserDetail(
+      GetUserDetailParams params) async {
+    final response = await _datasource.getUserDetail(params);
+
+    return response.fold(
+      (failure) => Left(failure),
+      (response) => Right(response.toEntity()),
+    );
+  }
 }

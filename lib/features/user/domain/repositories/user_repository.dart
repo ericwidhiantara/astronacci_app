@@ -21,4 +21,7 @@ abstract class UserRepository {
   Future<Either<Failure, UserProfileEntity>> updateProfile(
     PostUpdateProfileParams params,
   );
+
+  Future<Either<Failure, UserProfileEntity>> getUserDetail(
+      GetUserDetailParams params);
 }
